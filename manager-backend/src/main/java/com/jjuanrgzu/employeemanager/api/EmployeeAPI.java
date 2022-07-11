@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.jjuanrgzu.employeemanager.dto.EmployeeDTO;
 import com.jjuanrgzu.employeemanager.service.EmployeeService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/employee")
 @Validated
 public class EmployeeAPI {
@@ -33,7 +35,7 @@ public class EmployeeAPI {
 	}
 	
 	@PutMapping(value = "/update")
-	public ResponseEntity<EmployeeDTO> updateEmployee(EmployeeDTO employee) {
+	public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employee) {
 		EmployeeDTO employeeUpdated = employeeService.updateEmployee(employee);
 		return new ResponseEntity<>(employeeUpdated,HttpStatus.OK);
 	}
@@ -45,7 +47,7 @@ public class EmployeeAPI {
 	}
 	
 	@GetMapping(value = "/get/{id}")
-	public ResponseEntity<EmployeeDTO> findEmployeeById(Long id) {
+	public ResponseEntity<EmployeeDTO> findEmployeeById(@PathVariable Long id) {
 		EmployeeDTO employeeFound = employeeService.findEmployeeById(id);
 		return new ResponseEntity<>(employeeFound,HttpStatus.OK);
 	}
